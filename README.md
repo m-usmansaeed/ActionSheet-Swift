@@ -13,3 +13,5 @@ Usage:
  }
  action.showActionSheetWithTitle(title: "SELECT FRUIT", scrollEnable: false)
 ```
+## Output
+![](https://github.com/soarlabs/ActionSheet-Swift/blob/master/demo.gif)
