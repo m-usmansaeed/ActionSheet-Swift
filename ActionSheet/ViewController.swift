@@ -12,7 +12,17 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    @IBAction func btnShowActionSheet(_ sender: Any) {
+        
+        let action = ActionSheet(frame: self.view.frame)
+        action.items = ["Blueberry","Apple","Coconut"]
+        action.images = ["Blueberry","Apple","Coconut"]
+        action.selectedIndexPath = { indexPath in
+            print("\(indexPath)")
+        }
+        action.showActionSheetWithTitle(title: "SELECT FRUIT", scrollEnable: false)
     }
 
     override func didReceiveMemoryWarning() {
