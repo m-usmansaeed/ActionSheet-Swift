@@ -1,10 +1,24 @@
-//
-//  ActionSheet.swift
-//  ActionSheet
-//
-//  Created by M Usman Saeed on 25/07/2017.
-//  Copyright © 2017 MUS. All rights reserved.
-//
+/**
+ * Copyright © 2017 MUS.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 import UIKit
 
@@ -18,6 +32,7 @@ class ActionSheet: UIControl,UITableViewDelegate,UIGestureRecognizerDelegate,UIT
     private var shadowView : UIView!
     private var lblTitle : UILabel!
     private var btnClose : UIButton!
+    public var selectedIndex = IndexPath()
 
     private var tableView : UITableView!
     
@@ -130,7 +145,6 @@ class ActionSheet: UIControl,UITableViewDelegate,UIGestureRecognizerDelegate,UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        
         configureCell(cell: cell, forRowAt: indexPath)
         return cell
     }
@@ -152,6 +166,10 @@ class ActionSheet: UIControl,UITableViewDelegate,UIGestureRecognizerDelegate,UIT
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedIndexPath!(indexPath)
+        
+        self.selectedIndex = indexPath
+        sendActions(for: .valueChanged)
+        
         self.hide()
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -171,10 +189,7 @@ class ActionSheet: UIControl,UITableViewDelegate,UIGestureRecognizerDelegate,UIT
             
         }, completion: { (isFinished:Bool) in
             UIView.animate(withDuration: 0.25, delay: 0.1, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options:[.curveEaseInOut,.transitionCrossDissolve], animations: {
-                
                 self.shadowView.layer.opacity = 0.0
-                
-                
             }, completion: { (isFinished:Bool) in
                 self.removeFromSuperview()
             })
